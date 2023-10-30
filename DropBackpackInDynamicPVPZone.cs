@@ -12,8 +12,6 @@ namespace Oxide.Plugins
         [PluginReference]
         private readonly Plugin Backpacks, DynamicPVP, ZoneManager;
 
-        private readonly List<DroppedItemContainer> _droppedItemContainerList = new List<DroppedItemContainer>();
-
         #endregion
 
         #region Hooks
