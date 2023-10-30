@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Oxide.Plugins
 {
-    [Info("Drop Backpack In Dynamic PVP Zone", "WhiteThunder", "0.1.0")]
+    [Info("Drop Backpack In Dynamic PVP Zone", "WhiteThunder", "1.0.0")]
     [Description("Forces player backpacks to drop when they are killed in a DynamicPVP zone.")]
     internal class DropBackpackInDynamicPVPZone : CovalencePlugin
     {
