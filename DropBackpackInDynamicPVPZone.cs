@@ -3,11 +3,13 @@ using System.Collections.Generic;
 
 namespace Oxide.Plugins
 {
-    [Info("Drop Backpack In Dynamic PVP Zone", "WhiteThunder", "1.0.0")]
+    [Info("Drop Backpack In Dynamic PVP Zone", "WhiteThunder", "1.1.0")]
     [Description("Forces player backpacks to drop when they are killed in a DynamicPVP zone.")]
     internal class DropBackpackInDynamicPVPZone : CovalencePlugin
     {
         #region Fields
+
+        private const string PermissionKeepOnDeath = "dropbackpackindynamicpvpzone.keepondeath";
 
         [PluginReference]
         private readonly Plugin Backpacks, DynamicPVP, ZoneManager;
@@ -16,16 +18,23 @@ namespace Oxide.Plugins
 
         #region Hooks
 
+        private void Init()
+        {
+            permission.RegisterPermission(PermissionKeepOnDeath, this);
+        }
+
         // Handle player death by normal means.
         private void OnEntityDeath(BasePlayer player, HitInfo info)
         {
-            OnEntityKill(player);;
+            OnEntityKill(player);
         }
 
         // Handle player death while sleeping in a safe zone.
         private void OnEntityKill(BasePlayer player)
         {
-            if (player.IsNpc || !IsPlayerInPvpZone(player))
+            if (player.IsNpc
+                || !IsPlayerInPvpZone(player)
+                || permission.UserHasPermission(player.UserIDString, PermissionKeepOnDeath))
                 return;
 
             var droppedItemContainer = Backpacks?.Call("API_DropBackpack", player);
